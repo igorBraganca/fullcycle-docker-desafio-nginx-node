@@ -1,0 +1,24 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY *.js .
+
+EXPOSE 3000
+
+ENV DB_HOST=db
+ENV DB_PORT=3306
+ENV DB_USER=""
+ENV DB_PASSWORD=""
+ENV DB_NAME=""
+
+RUN wget -q -O wait-for https://raw.githubusercontent.com/eficode/wait-for/master/wait-for
+RUN chmod +x wait-for
+
+ENTRYPOINT ./wait-for ${DB_HOST:-db}:${DB_PORT:-3306} -t 30 -- node $0 $@
+
+CMD ["index.js"]
