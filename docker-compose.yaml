@@ -9,6 +9,8 @@ services:
       - MYSQL_ROOT_PASSWORD=123456
     networks:
       - node_network
+    volumes:
+      - ./mysql:/var/lib/mysql
   app:
     image: fullcycle/nodeapp
     build:
