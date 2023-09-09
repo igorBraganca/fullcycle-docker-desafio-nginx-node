@@ -15,6 +15,7 @@ services:
     image: fullcycle/nodeapp
     build:
       context: ./app
+      dockerfile: Dockerfile.prod
     container_name: app
     restart: always
     environment:
