@@ -10,3 +10,10 @@ A cada acesso um novo registro deve ser inserido, e a lista dos nomes deve inclu
 ## Resultado
 
 Executar o comando `docker compose up -d` e acessar no navegador a url `http://locahost:8080`.
+
+## Ambiente de desenvolvimento
+
+Para o desenvolvimento utilizar o container padrão criado com o `docker compose -f ./docker-compose.dev.yaml up -d --build`.
+Esse comando irá iniciar um container padronizado com as dependências pré configuradas e com a pasta local `./app` mapeada para o volume `/app`, assim qualquer alteração feita na pasta local irá refletir no container.
+
+Para inicialização do app executar `docker exec -d app npm run dev`. O app está disponível em `http://localhost:3000`
