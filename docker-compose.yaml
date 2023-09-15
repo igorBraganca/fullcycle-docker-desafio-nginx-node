@@ -12,24 +12,26 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
   app:
-    image: fullcycle/nodeapp
     build:
       context: ./app
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     container_name: app
     restart: always
+    tty: true
     environment:
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USER=root
       - DB_PASSWORD=123456
       - DB_NAME=nodeDB
+    entrypoint: sh -c "npm install && node index.js"
+    volumes:
+      - ./app/:/app/      
     networks:
       - node_network
     depends_on:
       - db
   nginx:
-    image: fullcycle/nginx_nodeapp
     build:
       context: ./nginx
     container_name: nginx_app
