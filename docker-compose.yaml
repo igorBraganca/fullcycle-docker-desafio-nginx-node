@@ -11,6 +11,11 @@ services:
       - node_network
     volumes:
       - ./mysql:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 5s
+      retries: 60
   app:
     build:
       context: ./app
@@ -26,11 +31,12 @@ services:
       - DB_NAME=nodeDB
     entrypoint: sh -c "npm install && node index.js"
     volumes:
-      - ./app/:/app/      
+      - ./app/:/app/
     networks:
-      - node_network
+      - node_network  
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   nginx:
     build:
       context: ./nginx
@@ -41,7 +47,8 @@ services:
     networks:
       - node_network
     depends_on:
-      - app
+      app:
+        condition: service_healthy
 
 networks:
   node_network:
