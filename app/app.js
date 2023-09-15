@@ -3,6 +3,11 @@ const { getConnection } = require('./db')
 
 const app = express()
 
+app.get('/health',  async (req, res) => {
+    console.log('healthcheck')
+    res.send('OK')
+})
+
 app.get('/', async (req, res) => {
     const connection = await getConnection()
     const [rows, fields] = await connection.query('SELECT name FROM people')

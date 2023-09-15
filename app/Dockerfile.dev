@@ -13,4 +13,4 @@ ENV DB_PASSWORD=""
 ENV DB_NAME=""
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=20 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
